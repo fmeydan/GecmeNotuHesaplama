@@ -3,6 +3,8 @@ package com.fuatmeydan.nothesapla;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cursoradapter.widget.SimpleCursorAdapter;
 
+import android.content.ContentValues;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -18,9 +20,10 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import com.fuatmeydan.nothesapla.R;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import Helper.DatabaseHelper;
@@ -28,17 +31,17 @@ import Helper.DatabaseHelper;
 public class MainActivity extends AppCompatActivity  {
 
     Spinner spinner_DersAdi;
-    EditText vize1,vize2,vize3,odev1,odev2,odev3,odev4,quiz1,quiz2,quiz3,vize1_oran,vize2_oran,vize3_oran,odev1_oran,odev2_oran,odev3_oran,odev4_oran,quiz1_oran,quiz2_oran,quiz3_oran,gecme_not,final_oran;
+    EditText vize1,vize2,vize3,odev1,odev2,odev3,odev4,quiz1,quiz2,quiz3,vize1_oran,vize2_oran,vize3_oran,odev1_oran,odev2_oran,odev3_oran,odev4_oran,quiz1_oran,quiz2_oran,quiz3_oran,gecme_not,final_oran,dersAdi;
     TextView gereken_not;
     Button btn_hesapla,btn_kaydet;
     SQLiteDatabase db;
-    DatabaseHelper dbHelper;
 
-    ArrayList<String> derslistesi=new ArrayList<>();
+
+   // ArrayList<String> derslistesi=new ArrayList<>();
     ArrayAdapter<String> dersadapter;
     SharedPreferences sp;
     SharedPreferences.Editor spe;
-
+    ArrayList<String>ders_liste;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +50,7 @@ public class MainActivity extends AppCompatActivity  {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         this.getSupportActionBar().hide();
+
 
 
 
@@ -76,19 +80,24 @@ public class MainActivity extends AppCompatActivity  {
         gereken_not=findViewById(R.id.tv_gerekenNot);
         btn_hesapla=findViewById(R.id.button);
         btn_kaydet=findViewById(R.id.btn_kaydet);
+        dersAdi=findViewById(R.id.et_dersAdi);
         sp= PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         spe=sp.edit();
 
-        try {
-            dbHelper=new DatabaseHelper(getApplicationContext());
-            db=dbHelper.getReadableDatabase();
-            Cursor c=db.rawQuery("select * from dersler2",null);
-            while (c.moveToNext()){
-                derslistesi.add(c.getString(c.getColumnIndex("ders_adi")));
-            }
-        }catch(IOException e){
-            Toast.makeText(this, "ss", Toast.LENGTH_LONG).show();
+
+        DatabaseHelper dbHelper=new DatabaseHelper(getApplicationContext());
+
+
+        ders_liste=dbHelper.dersler();
+        if (ders_liste.size()==0){
+
+        }else{
+            dersadapter=new ArrayAdapter<String>(this,android.R.layout.simple_dropdown_item_1line,ders_liste);
+            spinner_DersAdi.setAdapter(dersadapter);
         }
+
+
+
 
 
         spinner_DersAdi.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -159,18 +168,56 @@ public class MainActivity extends AppCompatActivity  {
         btn_kaydet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(),"Henüz Kaydetme işlemi etkinleştirilmedi",Toast.LENGTH_LONG).show();
+                DatabaseHelper dbHelper =new DatabaseHelper(getApplicationContext());
+
+                String kaydet_dersAdi=dersAdi.getText().toString();
+                String kaydet_vize1 =vize1.getText().toString();
+                String kaydet_vize1Oran=(vize1_oran.getText().toString());
+                String kaydet_vize2Oran=(vize2_oran.getText().toString());
+                String kaydet_vize3Oran=(vize3_oran.getText().toString());
+                String kaydet_odev1Oran=(odev1_oran.getText().toString());
+                String kaydet_odev2Oran=(odev2_oran.getText().toString());
+                String kaydet_odev3Oran=(odev3_oran.getText().toString());
+                String kaydet_odev4Oran=(odev4_oran.getText().toString());
+                String kaydet_quiz1Oran=(quiz1_oran.getText().toString());
+                String kaydet_quiz2Oran=(quiz2_oran.getText().toString());
+                String kaydet_quiz3Oran=(quiz3_oran.getText().toString());
+                String kaydet_vize2 = (vize2.getText().toString());
+                String kaydet_vize3 = (vize3.getText().toString());
+                String kaydet_quiz1 = (quiz1.getText().toString());
+                String kaydet_quiz2 = (quiz2.getText().toString());
+                String kaydet_quiz3 = (quiz3.getText().toString());
+                String kaydet_odev1 = (odev1.getText().toString());
+                String kaydet_odev2 = (odev2.getText().toString());
+                String kaydet_odev3 = (odev3.getText().toString());
+                String kaydet_odev4 = (odev4.getText().toString());
+                String kaydet_final_oran = (final_oran.getText().toString());
+                String kaydet_gecme_not = (gecme_not.getText().toString());
+
+                if(dbHelper.dersEkle(kaydet_dersAdi,kaydet_vize1,kaydet_vize2,kaydet_vize3,kaydet_quiz1,kaydet_quiz2,kaydet_quiz3,kaydet_odev1,kaydet_odev2,kaydet_odev3,kaydet_odev4,kaydet_vize1Oran,kaydet_vize2Oran,kaydet_vize3Oran,kaydet_quiz1Oran,kaydet_quiz2Oran,kaydet_quiz3Oran,kaydet_odev1Oran,kaydet_odev2Oran,kaydet_odev3Oran,kaydet_odev4Oran,kaydet_final_oran,kaydet_gecme_not)==true){
+                    Toast.makeText(getApplicationContext(),"Ders Eklendi",Toast.LENGTH_LONG).show();
+                }else{
+                    Toast.makeText(getApplicationContext(),"!! Ders Eklenemedi !!",Toast.LENGTH_LONG).show();
+                }
+
+
 
             }
         });
-        dersadapter=new ArrayAdapter<>(getApplicationContext(),android.R.layout.simple_dropdown_item_1line,derslistesi);
-        spinner_DersAdi.setAdapter(dersadapter);
+
 
     }
     private double oranHesap(double not,double oran){
         return not*(oran/100);
     }
 
+
+    @Override
+    public void onBackPressed() {
+        Intent intent =new Intent(MainActivity.this,GirisActivity.class);
+       startActivity(intent);
+        finish();
+    }
 
 
 

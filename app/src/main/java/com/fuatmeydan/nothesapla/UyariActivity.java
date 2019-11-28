@@ -31,9 +31,9 @@ public class UyariActivity extends AppCompatActivity {
         @Override
         public void run() {
 
-            Intent intent = new Intent(UyariActivity.this, MainActivity.class);
+            Intent intent = new Intent(UyariActivity.this, GirisActivity.class);
             startActivity(intent);
-            finish(); //Bu activity kapanır
+            finish();
         }
     }
 }

@@ -9,46 +9,44 @@
 
 
     <EditText
-        android:id="@+id/et_vize1"
+        android:id="@+id/et_odev1"
         android:layout_width="103dp"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="1.Vize Notu"
+        android:hint="1.Ödev"
         android:inputType="number"
-        app:layout_constraintEnd_toStartOf="@+id/et_vize1_oran"
-        app:layout_constraintHorizontal_bias="0.45"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinner_dersAdi" />
+        app:layout_constraintStart_toStartOf="@+id/et_vize3"
+        app:layout_constraintTop_toBottomOf="@+id/et_vize3" />
 
     <EditText
-        android:id="@+id/et_vize2"
+        android:id="@+id/tv_gecme_notu"
         android:layout_width="103dp"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="2.Vize Notu"
+        android:hint="Geçme Not"
         android:inputType="number"
-        app:layout_constraintStart_toStartOf="@+id/et_vize1"
-        app:layout_constraintTop_toBottomOf="@+id/et_vize1" />
+        app:layout_constraintStart_toStartOf="@+id/et_quiz3"
+        app:layout_constraintTop_toBottomOf="@+id/et_quiz3" />
 
     <EditText
-        android:id="@+id/et_vize2_oran"
+        android:id="@+id/et_odev3"
         android:layout_width="103dp"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="2.Vize Oran"
+        android:hint="3.Ödev"
         android:inputType="number"
-        app:layout_constraintStart_toStartOf="@+id/et_vize1_oran"
-        app:layout_constraintTop_toBottomOf="@+id/et_vize1_oran" />
+        app:layout_constraintStart_toStartOf="@+id/et_odev2"
+        app:layout_constraintTop_toBottomOf="@+id/et_odev2" />
 
     <EditText
-        android:id="@+id/et_vize3_oran"
+        android:id="@+id/et_vize3"
         android:layout_width="103dp"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="3.Vize Oran"
+        android:hint="3.Vize Notu"
         android:inputType="number"
-        app:layout_constraintStart_toStartOf="@+id/et_vize2_oran"
-        app:layout_constraintTop_toBottomOf="@+id/et_vize2_oran" />
+        app:layout_constraintStart_toStartOf="@+id/et_vize2"
+        app:layout_constraintTop_toBottomOf="@+id/et_vize2" />
 
     <EditText
         android:id="@+id/et_odev4"
@@ -61,27 +59,46 @@
         app:layout_constraintTop_toBottomOf="@+id/et_odev3" />
 
     <EditText
-        android:id="@+id/et_quiz3_oran"
+        android:id="@+id/et_quiz2"
         android:layout_width="103dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="48dp"
         android:ems="10"
-        android:hint="3.Quiz Oran"
+        android:hint="2.Quiz"
         android:inputType="number"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/et_quiz2_oran"
-        app:layout_constraintTop_toBottomOf="@+id/et_quiz2_oran" />
+        app:layout_constraintStart_toStartOf="@+id/et_quiz1"
+        app:layout_constraintTop_toBottomOf="@+id/et_quiz1" />
 
     <EditText
-        android:id="@+id/et_odev2"
+        android:id="@+id/et_vize2"
         android:layout_width="103dp"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="2.Ödev"
+        android:hint="2.Vize Notu"
         android:inputType="number"
-        app:layout_constraintStart_toStartOf="@+id/et_odev1"
-        app:layout_constraintTop_toBottomOf="@+id/et_odev1" />
+        app:layout_constraintStart_toStartOf="@+id/et_vize1"
+        app:layout_constraintTop_toBottomOf="@+id/et_vize1" />
+
+    <EditText
+        android:id="@+id/et_vize1"
+        android:layout_width="103dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="1.Vize Notu"
+        android:inputType="numberDecimal"
+        app:layout_constraintEnd_toStartOf="@+id/et_vize1_oran"
+        app:layout_constraintHorizontal_bias="0.145"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spinner_dersAdi" />
+
+    <EditText
+        android:id="@+id/et_quiz3"
+        android:layout_width="103dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="3.Quiz"
+        android:inputType="number"
+        app:layout_constraintStart_toStartOf="@+id/et_quiz2"
+        app:layout_constraintTop_toBottomOf="@+id/et_quiz2" />
 
     <EditText
         android:id="@+id/et_quiz1"
@@ -94,6 +111,80 @@
         app:layout_constraintTop_toBottomOf="@+id/et_odev4" />
 
     <EditText
+        android:id="@+id/et_odev2"
+        android:layout_width="103dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="2.Ödev"
+        android:inputType="number"
+        app:layout_constraintStart_toStartOf="@+id/et_odev1"
+        app:layout_constraintTop_toBottomOf="@+id/et_odev1" />
+
+    <EditText
+        android:id="@+id/et_vize1_oran"
+        android:layout_width="103dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="20dp"
+        android:ems="10"
+        android:hint="1.Vize Oran"
+        android:inputType="number"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spinner_dersAdi" />
+
+    <EditText
+        android:id="@+id/et_odev2_oran"
+        android:layout_width="103dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="2.Ödev Oran"
+        android:inputType="number"
+        app:layout_constraintStart_toStartOf="@+id/et_odev1_oran"
+        app:layout_constraintTop_toBottomOf="@+id/et_odev1_oran" />
+
+    <EditText
+        android:id="@+id/et_vize2_oran"
+        android:layout_width="103dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="2.Vize Oran"
+        android:inputType="number"
+        app:layout_constraintStart_toStartOf="@+id/et_vize1_oran"
+        app:layout_constraintTop_toBottomOf="@+id/et_vize1_oran" />
+
+    <EditText
+        android:id="@+id/et_odev4_oran"
+        android:layout_width="103dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="4.Ödev Oran"
+        android:inputType="number"
+        app:layout_constraintStart_toStartOf="@+id/et_odev3_oran"
+        app:layout_constraintTop_toBottomOf="@+id/et_odev3_oran" />
+
+    <EditText
+        android:id="@+id/et_vize3_oran"
+        android:layout_width="103dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="3.Vize Oran"
+        android:inputType="number"
+        app:layout_constraintStart_toStartOf="@+id/et_vize2_oran"
+        app:layout_constraintTop_toBottomOf="@+id/et_vize2_oran" />
+
+    <EditText
+        android:id="@+id/et_quiz3_oran"
+        android:layout_width="103dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="48dp"
+        android:ems="10"
+        android:hint="3.Quiz Oran"
+        android:inputType="number"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.107"
+        app:layout_constraintStart_toStartOf="@+id/et_quiz2_oran"
+        app:layout_constraintTop_toBottomOf="@+id/et_quiz2_oran" />
+
+    <EditText
         android:id="@+id/et_odev3_oran"
         android:layout_width="103dp"
         android:layout_height="wrap_content"
@@ -102,6 +193,16 @@
         android:inputType="number"
         app:layout_constraintStart_toStartOf="@+id/et_odev2_oran"
         app:layout_constraintTop_toBottomOf="@+id/et_odev2_oran" />
+
+    <EditText
+        android:id="@+id/et_quiz1_oran"
+        android:layout_width="103dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="1.Quiz Oran"
+        android:inputType="number"
+        app:layout_constraintStart_toStartOf="@+id/et_odev4_oran"
+        app:layout_constraintTop_toBottomOf="@+id/et_odev4_oran" />
 
     <EditText
         android:id="@+id/et_quiz2_oran"
@@ -124,37 +225,6 @@
         app:layout_constraintTop_toBottomOf="@+id/et_quiz3_oran" />
 
     <EditText
-        android:id="@+id/et_odev1"
-        android:layout_width="103dp"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="1.Ödev"
-        android:inputType="number"
-        app:layout_constraintStart_toStartOf="@+id/et_vize3"
-        app:layout_constraintTop_toBottomOf="@+id/et_vize3" />
-
-    <EditText
-        android:id="@+id/et_odev3"
-        android:layout_width="103dp"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="3.Ödev"
-        android:inputType="number"
-        app:layout_constraintStart_toStartOf="@+id/et_odev2"
-        app:layout_constraintTop_toBottomOf="@+id/et_odev2" />
-
-    <EditText
-        android:id="@+id/et_vize1_oran"
-        android:layout_width="103dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="52dp"
-        android:ems="10"
-        android:hint="1.Vize Oran"
-        android:inputType="number"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinner_dersAdi" />
-
-    <EditText
         android:id="@+id/et_odev1_oran"
         android:layout_width="103dp"
         android:layout_height="wrap_content"
@@ -163,76 +233,6 @@
         android:inputType="number"
         app:layout_constraintStart_toStartOf="@+id/et_vize3_oran"
         app:layout_constraintTop_toBottomOf="@+id/et_vize3_oran" />
-
-    <EditText
-        android:id="@+id/et_odev4_oran"
-        android:layout_width="103dp"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="4.Ödev Oran"
-        android:inputType="number"
-        app:layout_constraintStart_toStartOf="@+id/et_odev3_oran"
-        app:layout_constraintTop_toBottomOf="@+id/et_odev3_oran" />
-
-    <EditText
-        android:id="@+id/et_quiz1_oran"
-        android:layout_width="103dp"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="1.Quiz Oran"
-        android:inputType="number"
-        app:layout_constraintStart_toStartOf="@+id/et_odev4_oran"
-        app:layout_constraintTop_toBottomOf="@+id/et_odev4_oran" />
-
-    <EditText
-        android:id="@+id/et_quiz3"
-        android:layout_width="103dp"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="3.Quiz"
-        android:inputType="number"
-        app:layout_constraintStart_toStartOf="@+id/et_quiz2"
-        app:layout_constraintTop_toBottomOf="@+id/et_quiz2" />
-
-    <EditText
-        android:id="@+id/tv_gecme_notu"
-        android:layout_width="103dp"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Geçme Not"
-        android:inputType="number"
-        app:layout_constraintStart_toStartOf="@+id/et_quiz3"
-        app:layout_constraintTop_toBottomOf="@+id/et_quiz3" />
-
-    <EditText
-        android:id="@+id/et_vize3"
-        android:layout_width="103dp"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="3.Vize Notu"
-        android:inputType="number"
-        app:layout_constraintStart_toStartOf="@+id/et_vize2"
-        app:layout_constraintTop_toBottomOf="@+id/et_vize2" />
-
-    <EditText
-        android:id="@+id/et_odev2_oran"
-        android:layout_width="103dp"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="2.Ödev Oran"
-        android:inputType="number"
-        app:layout_constraintStart_toStartOf="@+id/et_odev1_oran"
-        app:layout_constraintTop_toBottomOf="@+id/et_odev1_oran" />
-
-    <EditText
-        android:id="@+id/et_quiz2"
-        android:layout_width="103dp"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="2.Quiz"
-        android:inputType="number"
-        app:layout_constraintStart_toStartOf="@+id/et_quiz1"
-        app:layout_constraintTop_toBottomOf="@+id/et_quiz1" />
 
     <Spinner
         android:id="@+id/spinner_dersAdi"
@@ -281,5 +281,20 @@
         app:layout_constraintStart_toEndOf="@+id/button"
         app:layout_constraintTop_toBottomOf="@+id/tv_gerekenNot"
         app:layout_constraintVertical_bias="0.0" />
+
+    <EditText
+        android:id="@+id/et_dersAdi"
+        android:layout_width="141dp"
+        android:layout_height="43dp"
+        android:layout_marginTop="316dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Ders Adi"
+        app:layout_constraintBottom_toTopOf="@+id/tv_gerekenNot"
+        app:layout_constraintEnd_toStartOf="@+id/et_odev3_oran"
+        app:layout_constraintHorizontal_bias="0.294"
+        app:layout_constraintStart_toEndOf="@+id/et_odev3"
+        app:layout_constraintTop_toBottomOf="@+id/spinner_dersAdi"
+        app:layout_constraintVertical_bias="0.925" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
