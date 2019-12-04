@@ -30,7 +30,7 @@ import Helper.DatabaseHelper;
 
 public class MainActivity extends AppCompatActivity  {
 
-    Spinner spinner_DersAdi;
+
     EditText vize1,vize2,vize3,odev1,odev2,odev3,odev4,quiz1,quiz2,quiz3,vize1_oran,vize2_oran,vize3_oran,odev1_oran,odev2_oran,odev3_oran,odev4_oran,quiz1_oran,quiz2_oran,quiz3_oran,gecme_not,final_oran,dersAdi;
     TextView gereken_not;
     Button btn_hesapla,btn_kaydet;
@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity  {
 
 
 
-        spinner_DersAdi=findViewById(R.id.spinner_dersAdi);
+
         vize1=findViewById(R.id.et_vize1);
         vize2=findViewById(R.id.et_vize2);
         vize3=findViewById(R.id.et_vize3);
@@ -75,10 +75,10 @@ public class MainActivity extends AppCompatActivity  {
         quiz1_oran=findViewById(R.id.et_quiz1_oran);
         quiz2_oran=findViewById(R.id.et_quiz2_oran);
         quiz3_oran=findViewById(R.id.et_quiz3_oran);
-        gecme_not=findViewById(R.id.tv_gecme_notu);
+        gecme_not=findViewById(R.id.et_gecme_notu);
         final_oran=findViewById(R.id.et_final_oran);
         gereken_not=findViewById(R.id.tv_gerekenNot);
-        btn_hesapla=findViewById(R.id.button);
+        btn_hesapla=findViewById(R.id.btn_hesapla);
         btn_kaydet=findViewById(R.id.btn_kaydet);
         dersAdi=findViewById(R.id.et_dersAdi);
         sp= PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
@@ -89,28 +89,13 @@ public class MainActivity extends AppCompatActivity  {
 
 
         ders_liste=dbHelper.dersler();
-        if (ders_liste.size()==0){
-
-        }else{
-            dersadapter=new ArrayAdapter<String>(this,android.R.layout.simple_dropdown_item_1line,ders_liste);
-            spinner_DersAdi.setAdapter(dersadapter);
-        }
 
 
 
 
 
-        spinner_DersAdi.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(MainActivity.this, "Ders Seçimi Yapım Aşamasında", Toast.LENGTH_SHORT).show();
-            }
 
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
 
-            }
-        });
 
 
 
@@ -194,11 +179,8 @@ public class MainActivity extends AppCompatActivity  {
                 String kaydet_final_oran = (final_oran.getText().toString());
                 String kaydet_gecme_not = (gecme_not.getText().toString());
 
-                if(dbHelper.dersEkle(kaydet_dersAdi,kaydet_vize1,kaydet_vize2,kaydet_vize3,kaydet_quiz1,kaydet_quiz2,kaydet_quiz3,kaydet_odev1,kaydet_odev2,kaydet_odev3,kaydet_odev4,kaydet_vize1Oran,kaydet_vize2Oran,kaydet_vize3Oran,kaydet_quiz1Oran,kaydet_quiz2Oran,kaydet_quiz3Oran,kaydet_odev1Oran,kaydet_odev2Oran,kaydet_odev3Oran,kaydet_odev4Oran,kaydet_final_oran,kaydet_gecme_not)==true){
-                    Toast.makeText(getApplicationContext(),"Ders Eklendi",Toast.LENGTH_LONG).show();
-                }else{
-                    Toast.makeText(getApplicationContext(),"!! Ders Eklenemedi !!",Toast.LENGTH_LONG).show();
-                }
+                String sonuc=dbHelper.dersEkle(kaydet_dersAdi,kaydet_vize1,kaydet_vize2,kaydet_vize3,kaydet_quiz1,kaydet_quiz2,kaydet_quiz3,kaydet_odev1,kaydet_odev2,kaydet_odev3,kaydet_odev4,kaydet_vize1Oran,kaydet_vize2Oran,kaydet_vize3Oran,kaydet_quiz1Oran,kaydet_quiz2Oran,kaydet_quiz3Oran,kaydet_odev1Oran,kaydet_odev2Oran,kaydet_odev3Oran,kaydet_odev4Oran,kaydet_final_oran,kaydet_gecme_not);
+                Toast.makeText(getApplicationContext(),sonuc,Toast.LENGTH_LONG).show();
 
 
 
@@ -215,7 +197,7 @@ public class MainActivity extends AppCompatActivity  {
     @Override
     public void onBackPressed() {
         Intent intent =new Intent(MainActivity.this,GirisActivity.class);
-       startActivity(intent);
+        startActivity(intent);
         finish();
     }
 
