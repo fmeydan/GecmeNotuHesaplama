@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity  {
     SQLiteDatabase db;
 
 
+
    // ArrayList<String> derslistesi=new ArrayList<>();
     ArrayAdapter<String> dersadapter;
     SharedPreferences sp;
@@ -48,6 +49,8 @@ public class MainActivity extends AppCompatActivity  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+
 
         this.getSupportActionBar().hide();
         vize1=findViewById(R.id.et_vize1);
@@ -81,7 +84,34 @@ public class MainActivity extends AppCompatActivity  {
         DatabaseHelper dbHelper=new DatabaseHelper(getApplicationContext());
         ders_liste=dbHelper.dersler();
 
+        try {
+            Bundle veriler = getIntent().getExtras();
+            dersAdi.setText(veriler.getString("dersadi"));
+            vize1.setText(veriler.getString("Vize1"));
+            vize2.setText(veriler.getString("Vize2"));
+            vize3.setText(veriler.getString("Vize3"));
+            quiz1.setText(veriler.getString("Quiz1"));
+            quiz2.setText(veriler.getString("Quiz2"));
+            quiz3.setText(veriler.getString("Quiz3"));
+            odev1.setText(veriler.getString("Odev1"));
+            odev2.setText(veriler.getString("Odev2"));
+            odev3.setText(veriler.getString("Odev3"));
+            odev4.setText(veriler.getString("Odev4"));
+            vize1_oran.setText(veriler.getString("Vize1_Oran"));
+            vize2_oran.setText(veriler.getString("Vize2_Oran"));
+            vize3_oran.setText(veriler.getString("Vize3_Oran"));
+            quiz1_oran.setText(veriler.getString("Quiz1_Oran"));
+            quiz2_oran.setText(veriler.getString("Quiz2_Oran"));
+            quiz3_oran.setText(veriler.getString("Quiz3_Oran"));
+            odev1_oran.setText(veriler.getString("Odev1_Oran"));
+            odev2_oran.setText(veriler.getString("Odev2_Oran"));
+            odev3_oran.setText(veriler.getString("Odev3_Oran"));
+            odev4_oran.setText(veriler.getString("Odev4_Oran"));
+            gecme_not.setText((veriler.getString("Gecme_Not")));
+            final_oran.setText(veriler.getString("Final_Oran"));
+        }catch (Exception e){
 
+        }
 
 
 

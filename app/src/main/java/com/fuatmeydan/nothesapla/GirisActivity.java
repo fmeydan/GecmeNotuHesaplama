@@ -29,7 +29,8 @@ import java.util.ArrayList;
 
 import Helper.DatabaseHelper;
 
-public class GirisActivity extends AppCompatActivity {
+
+public class GirisActivity extends AppCompatActivity implements DuzenleDialog.duzenleDialogListener {
 ListView lv;
 ArrayList<String> ders_liste;
 ArrayAdapter<String> dersadapter;
@@ -71,13 +72,41 @@ int derspos;
             startActivity(intent);
 
         }else{
-            dersadapter=new ArrayAdapter<String>(this, android.R.layout.simple_dropdown_item_1line,ders_liste);
+            dersadapter=new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line,ders_liste);
             lv.setAdapter(dersadapter);
             lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     dersadi=lv.getItemAtPosition(position).toString();
                     derspos=position;
+                    ArrayList<String> liste = dbHelper.dersDetay(dersadi);
+                    Intent intent = new Intent(GirisActivity.this,MainActivity.class);
+                    intent.putExtra("dersadi",dersadi);
+                    intent.putExtra("Vize1",liste.get(1));
+                    intent.putExtra("Vize2",liste.get(2));
+                    intent.putExtra("Vize3",liste.get(3));
+                    intent.putExtra("Quiz1",liste.get(4));
+                    intent.putExtra("Quiz2",liste.get(5));
+                    intent.putExtra("Quiz3",liste.get(6));
+                    intent.putExtra("Odev1",liste.get(7));
+                    intent.putExtra("Odev2",liste.get(8));
+                    intent.putExtra("Odev3",liste.get(9));
+                    intent.putExtra("Odev4",liste.get(10));
+                    intent.putExtra("Vize1_Oran",liste.get(11));
+                    intent.putExtra("Vize2_Oran",liste.get(12));
+                    intent.putExtra("Vize3_Oran",liste.get(13));
+                    intent.putExtra("Quiz1_Oran",liste.get(14));
+                    intent.putExtra("Quiz2_Oran",liste.get(15));
+                    intent.putExtra("Quiz3_Oran",liste.get(16));
+                    intent.putExtra("Odev1_Oran",liste.get(17));
+                    intent.putExtra("Odev2_Oran",liste.get(18));
+                    intent.putExtra("Odev3_Oran",liste.get(19));
+                    intent.putExtra("Odev4_Oran",liste.get(20));
+                    intent.putExtra("Gecme_Not",liste.get(21));
+                    intent.putExtra("Final_Oran",liste.get(22));
+                    startActivity(intent);
+
+
                 }
             });
 
@@ -118,31 +147,19 @@ int derspos;
 
 
             case R.id.Duzenle:
-                // edit stuff here
-                Dialog dialog = new Dialog(GirisActivity.this);
-                dialog.setTitle("Düzenle");
-                dialog.setContentView(R.layout.duzenle_layout);
-                EditText editTextYeniAd=(EditText)dialog.findViewById(R.id.editText_yeniAd);
-                Button buttonYeniAd=(Button)dialog.findViewById(R.id.button_yeniAd_tamam);
-                final String yeniAd=editTextYeniAd.getText().toString();
 
-                buttonYeniAd.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        ders_liste.set(derspos,yeniAd);
-                        dersadapter.notifyDataSetChanged();
-                    }
-                });
+                openDialog(); //duzenleye basılınca oluşturduğumuz dialog u açacak fonksiyonu çağırdık.
+
+
+
 
 
                 return true;
             case R.id.Sil:
-
-
-                if (dbHelper.dersSil(dersadi)){
+                if (dbHelper.dersSil(dersadi)){ //dbHelperdaki ders sil methodu başarılı olursa çalışacak kodlar.
                     Toast.makeText(getApplicationContext(),"Silme İşlemi Başarılı",Toast.LENGTH_SHORT).show();
-                    dersadapter.remove(ders_liste.get(derspos));
-                    dersadapter.notifyDataSetChanged();
+                    dersadapter.remove(ders_liste.get(derspos)); //listeden dersi sildik.
+                    dersadapter.notifyDataSetChanged();//listenin yenilenmesini sağladık.
                 }else{
                     Toast.makeText(getApplicationContext(),"Silme İşlemi Başarısız",Toast.LENGTH_SHORT).show();
                 }
@@ -153,12 +170,25 @@ int derspos;
         }
     }
 
+    private void openDialog() { //Uzun basılı tutulunca açılan menuden duzenleyi seçince açılcak olan fragment dialog penceresini açaçak method.
+        DuzenleDialog duzenleDialog = new DuzenleDialog();
+        duzenleDialog.show(getSupportFragmentManager(),"Duzenle Dialog");
+
+    }
 
 
+    @Override  //Açılan dialog penceresinde tamam a tıklanınca çalışacak method.
+    public void dersDuzenle(String yeniAd) {
+         DatabaseHelper dbHelper = new DatabaseHelper(getApplicationContext()); //yeni yazılan veriyi veritabanındakiyle değiştirmek için databasehelper dan instance aldık.
+         String eskiad=dersadi; //eski ders adi lazım olduğu için eskiad olarak bir değişkene atadık.
+         ders_liste.remove(derspos); //eski ders i listeden sildik.
+         dersadi=yeniAd; //yeni ders adini dersadi olarak globalde tanımladığımız değişkene atadık.
+         ders_liste.add(derspos,yeniAd); // eski sildiğimizin yerine listeye ekledik.
+         dersadapter.notifyDataSetChanged(); //liste yeni ekleneni göstersin diye notify set changed çalıştırdık.
+         dbHelper.sadeceDersAdiDuzenle(yeniAd,eskiad); //dbhelperdaki dersin sadece adını düzenleyen methoda eski ad ve yeni adı gönderdik ve veritabanında ismi değiştirdik.
 
 
-
-
+    }
 }
 
 
