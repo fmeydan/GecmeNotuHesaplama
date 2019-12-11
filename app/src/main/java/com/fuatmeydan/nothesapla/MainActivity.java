@@ -50,11 +50,6 @@ public class MainActivity extends AppCompatActivity  {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         this.getSupportActionBar().hide();
-
-
-
-
-
         vize1=findViewById(R.id.et_vize1);
         vize2=findViewById(R.id.et_vize2);
         vize3=findViewById(R.id.et_vize3);
@@ -83,12 +78,10 @@ public class MainActivity extends AppCompatActivity  {
         dersAdi=findViewById(R.id.et_dersAdi);
         sp= PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         spe=sp.edit();
-
-
         DatabaseHelper dbHelper=new DatabaseHelper(getApplicationContext());
-
-
         ders_liste=dbHelper.dersler();
+
+
 
 
 
@@ -181,8 +174,6 @@ public class MainActivity extends AppCompatActivity  {
 
                 String sonuc=dbHelper.dersEkle(kaydet_dersAdi,kaydet_vize1,kaydet_vize2,kaydet_vize3,kaydet_quiz1,kaydet_quiz2,kaydet_quiz3,kaydet_odev1,kaydet_odev2,kaydet_odev3,kaydet_odev4,kaydet_vize1Oran,kaydet_vize2Oran,kaydet_vize3Oran,kaydet_quiz1Oran,kaydet_quiz2Oran,kaydet_quiz3Oran,kaydet_odev1Oran,kaydet_odev2Oran,kaydet_odev3Oran,kaydet_odev4Oran,kaydet_final_oran,kaydet_gecme_not);
                 Toast.makeText(getApplicationContext(),sonuc,Toast.LENGTH_LONG).show();
-
-
 
             }
         });
