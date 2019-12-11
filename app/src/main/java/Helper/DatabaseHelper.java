@@ -170,7 +170,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 return "Ders Güncellendi";
 
             } catch (Exception e) {
-               
+
                 return "Ders Güncellemede Hata Oluştu";
             }
         }
