@@ -32,3 +32,14 @@ Seçilen dersin notlarının uygun yerlere gelmesi eklendi.
 
 Küçük iyileştirmeler yapıldı.
 
+# Versiyon 0.6
+
+Görsel iyileştirmeler yapıldı.
+
+Ders not ve oranları giriş yöntemi Decimal olarak değiştirildi.
+
+Veritabanına boş kayıt eklenmesi engellendi.
+
+Bilgilendirme Activity kaldırıldı.
+
+Icon eklendi.
