@@ -1,11 +1,12 @@
 package Helper;
-import java.util.ArrayList;
-import java.util.HashMap;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
+import java.util.ArrayList;
 
 
 public class DatabaseHelper extends SQLiteOpenHelper {
@@ -79,16 +80,30 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE);
     }
 
-    public void dersSil(int id){
+    public boolean dersSil(String ad){
 
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(TABLE_NAME, ID + " = ?",
-                new String[] { String.valueOf(id) });
-        db.close();
+        try{
+
+            String sql=String.format("delete from dersler where ders_adi = '%s'",ad);
+
+            db.execSQL(sql);
+            db.close();
+            return true;}
+
+        catch (Exception e){
+
+            return false;
+        }
+
     }
 
-    public boolean dersEkle(String ders_adi, String vize1,String vize2,String vize3,String quiz1,String quiz2,String quiz3,String odev1,String odev2,String odev3,String odev4,String vize1_oran,String vize2_oran,String vize3_oran,String quiz1_oran,String quiz2_oran,String quiz3_oran,String odev1_oran,String odev2_oran,String odev3_oran,String odev4_oran,String final_oran,String gecme_not) {
+    public String dersEkle(String ders_adi, String vize1,String vize2,String vize3,String quiz1,String quiz2,String quiz3,String odev1,String odev2,String odev3,String odev4,String vize1_oran,String vize2_oran,String vize3_oran,String quiz1_oran,String quiz2_oran,String quiz3_oran,String odev1_oran,String odev2_oran,String odev3_oran,String odev4_oran,String final_oran,String gecme_not) {
 
+        SQLiteDatabase dbr = this.getReadableDatabase();
+        String selectQuery = String.format("select * from dersler where ders_adi='%s'",ders_adi);
+        Cursor cursor = dbr.rawQuery(selectQuery, null);
+        if (!cursor.moveToNext()){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         try {
@@ -118,47 +133,99 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
             db.insert(TABLE_NAME, null, values);
             db.close();
-            return true;
+            return "Ders Ekleme Başarılı";
         } catch (Exception e){
-            return false;
+
+            return "Ders Eklenirken Bir Hata Oluştu";
+        }
+        }else {
+            SQLiteDatabase db = this.getWritableDatabase();
+            ContentValues values = new ContentValues();
+            values.put(VIZE1, vize1);
+            values.put(VIZE2, vize2);
+            values.put(VIZE3, vize3);
+            values.put(QUIZ1, quiz1);
+            values.put(QUIZ2, quiz2);
+            values.put(QUIZ3, quiz3);
+            values.put(ODEV1, odev1);
+            values.put(ODEV2, odev2);
+            values.put(ODEV3, odev3);
+            values.put(ODEV4, odev4);
+            values.put(VIZE1_ORAN, vize1_oran);
+            values.put(VIZE2_ORAN, vize2_oran);
+            values.put(VIZE3_ORAN, vize3_oran);
+            values.put(QUIZ1_ORAN, quiz1_oran);
+            values.put(QUIZ2_ORAN, quiz2_oran);
+            values.put(QUIZ3_ORAN, vize3_oran);
+            values.put(ODEV1_ORAN, odev1_oran);
+            values.put(ODEV2, odev2_oran);
+            values.put(ODEV3_ORAN, odev3_oran);
+            values.put(ODEV4_ORAN, odev4_oran);
+            values.put(FINAL_ORAN, final_oran);
+            values.put(GECME_NOT, gecme_not);
+            try {
+                db.update(TABLE_NAME, values, DERS_ADI + " = ?",
+                        new String[]{String.valueOf(ders_adi)});
+                db.close();
+                return "Ders Güncellendi";
+
+            } catch (Exception e) {
+
+                return "Ders Güncellemede Hata Oluştu";
+            }
         }
 
-    }
 
-    public HashMap<String, String> dersDetay(int id){
+//
+//
+//                String sql = String.format("update dersler set vize1=%s where ders_adi='%s'", vize1, ders_adi);
+//                db.execSQL(sql);
+//                db.close();
+//                return sql;
+//            }catch (Exception e){
+//                return String.format("update dersler set vize1='%s' where ders_adi='%s'", vize1, ders_adi);
+//            }
+
+        }
 
 
-        HashMap<String,String> ders = new HashMap<String,String>();
-        String selectQuery = "SELECT * FROM " + TABLE_NAME+ " WHERE id="+id;
 
+    public ArrayList<String> dersDetay(String dersad){
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        ArrayList<String> ders = new ArrayList<>();
+
+
+        String selectQuery=("SELECT * FROM " + TABLE_NAME+ " WHERE ders_adi=?");
+
+
+        Cursor cursor = db.rawQuery(selectQuery,new String[] { String.valueOf(dersad) });
         // Move to first row
         cursor.moveToFirst();
         if(cursor.getCount() > 0){
-            ders.put(DERS_ADI, cursor.getString(1));
-            ders.put(VIZE1, cursor.getString(2));
-            ders.put(VIZE2, cursor.getString(3));
-            ders.put(VIZE3, cursor.getString(4));
-            ders.put(QUIZ1, cursor.getString(5));
-            ders.put(QUIZ2, cursor.getString(6));
-            ders.put(QUIZ3, cursor.getString(7));
-            ders.put(ODEV1, cursor.getString(8));
-            ders.put(ODEV2, cursor.getString(9));
-            ders.put(ODEV3, cursor.getString(10));
-            ders.put(ODEV4, cursor.getString(11));
-            ders.put(VIZE1_ORAN, cursor.getString(12));
-            ders.put(VIZE2_ORAN, cursor.getString(13));
-            ders.put(VIZE3_ORAN, cursor.getString(14));
-            ders.put(QUIZ1_ORAN, cursor.getString(15));
-            ders.put(QUIZ2_ORAN, cursor.getString(16));
-            ders.put(QUIZ3, cursor.getString(17));
-            ders.put(ODEV1_ORAN, cursor.getString(18));
-            ders.put(ODEV2_ORAN, cursor.getString(19));
-            ders.put(ODEV3_ORAN, cursor.getString(20));
-            ders.put(ODEV4_ORAN, cursor.getString(21));
-            ders.put(FINAL_ORAN, cursor.getString(22));
-            ders.put(GECME_NOT, cursor.getString(23));
+            ders.add(cursor.getString(1));
+            ders.add(cursor.getString(2));
+            ders.add(cursor.getString(3));
+            ders.add( cursor.getString(4));
+            ders.add( cursor.getString(5));
+            ders.add( cursor.getString(6));
+            ders.add( cursor.getString(7));
+            ders.add( cursor.getString(8));
+            ders.add( cursor.getString(9));
+            ders.add( cursor.getString(10));
+            ders.add( cursor.getString(11));
+            ders.add( cursor.getString(12));
+            ders.add( cursor.getString(13));
+            ders.add( cursor.getString(14));
+            ders.add( cursor.getString(15));
+            ders.add( cursor.getString(16));
+            ders.add( cursor.getString(17));
+            ders.add( cursor.getString(18));
+            ders.add( cursor.getString(19));
+            ders.add( cursor.getString(20));
+            ders.add(cursor.getString(21));
+            ders.add( cursor.getString(22));
+            ders.add( cursor.getString(23));
 
         }
         cursor.close();
@@ -174,18 +241,23 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         String selectQuery = "SELECT * FROM " + TABLE_NAME;
         Cursor cursor = db.rawQuery(selectQuery, null);
-        ArrayList<String> derslist = new ArrayList<String>();
+        ArrayList<String> derslist = new ArrayList<>();
 
 
-       while(cursor.moveToNext()){
-           derslist.add(cursor.getString(cursor.getColumnIndex("ders_adi")));
-       }
+        while(cursor.moveToNext()){
+            derslist.add(cursor.getString(cursor.getColumnIndex("ders_adi")));
+
+        }
         db.close();
 
         return derslist;
     }
 
-    public void dersDuzenle(String ders_adi, String vize1,String vize2,String vize3,String quiz1,String quiz2,String quiz3,String odev1,String odev2,String odev3,String odev4,String vize1_oran,String vize2_oran,String vize3_oran,String quiz1_oran,String quiz2_oran,String quiz3_oran,String odev1_oran,String odev2_oran,String odev3_oran,String odev4_oran,String final_oran,String gecme_not)
+
+
+
+
+    public void dersDuzenle(String ders_adi , String vize1,String vize2,String vize3,String quiz1,String quiz2,String quiz3,String odev1,String odev2,String odev3,String odev4,String vize1_oran,String vize2_oran,String vize3_oran,String quiz1_oran,String quiz2_oran,String quiz3_oran,String odev1_oran,String odev2_oran,String odev3_oran,String odev4_oran,String final_oran,String gecme_not)
     {
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -217,6 +289,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         db.update(TABLE_NAME, values, DERS_ADI + " = ?",
                 new String[] { String.valueOf(ders_adi) });
+    }
+
+    public void sadeceDersAdiDuzenle(String yeniDers,String eskiDers){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(DERS_ADI,yeniDers);
+        db.update(TABLE_NAME, values, DERS_ADI + " = ?",
+                new String[] { String.valueOf(eskiDers) });
     }
 
     public int getRowCount() {
