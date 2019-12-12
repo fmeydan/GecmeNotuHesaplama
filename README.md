@@ -24,7 +24,7 @@ Listeden silinen derslerin anında listeden kaldırılması eklendi.
 # Versiyon 0.5
 
 
-Fragment ile Ders isminin düzenlenmesi eklendi.
+Fragment Dialog ile Ders isminin düzenlenmesi eklendi.
 
 Veritabanına ders notlarının kaydedilmesi eklendi.
 
