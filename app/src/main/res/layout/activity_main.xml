@@ -7,6 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:weightSum="14"
+    android:background="@drawable/main_background"
     tools:context=".MainActivity">
 
 
@@ -50,7 +51,7 @@
                 android:ems="10"
                 android:gravity="center"
                 android:hint="1. Vize Notu"
-                android:inputType="textPersonName"
+                android:inputType="numberDecimal"
                 android:text="" />
 
             <EditText
@@ -59,9 +60,9 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
+                android:inputType="numberDecimal"
                 android:gravity="center"
                 android:hint="1.Vize Oranı"
-                android:inputType="textPersonName"
                 android:text="" />
         </LinearLayout>
 
@@ -86,7 +87,7 @@
             android:ems="10"
             android:gravity="center"
             android:hint="2.Vize Notu"
-            android:inputType="textPersonName"
+            android:inputType="numberDecimal"
             android:text="" />
 
         <EditText
@@ -97,7 +98,7 @@
             android:ems="10"
             android:gravity="center"
             android:hint="2.Vize Oranı"
-            android:inputType="textPersonName"
+            android:inputType="numberDecimal"
             android:text="" />
     </LinearLayout>
 </LinearLayout> <LinearLayout
@@ -120,7 +121,7 @@
             android:ems="10"
             android:gravity="center"
             android:hint="3.Vize Notu"
-            android:inputType="textPersonName"
+            android:inputType="numberDecimal"
             android:text="" />
 
         <EditText
@@ -131,7 +132,7 @@
             android:ems="10"
             android:gravity="center"
             android:hint="3.Vize Oranı"
-            android:inputType="textPersonName"
+            android:inputType="numberDecimal"
             android:text="" />
     </LinearLayout>
 
@@ -156,7 +157,7 @@
             android:ems="10"
             android:gravity="center"
             android:hint="1.Odev Notu"
-            android:inputType="textPersonName"
+            android:inputType="numberDecimal"
             android:text="" />
 
         <EditText
@@ -167,7 +168,7 @@
             android:ems="10"
             android:gravity="center"
             android:hint="1.Odev Oranı"
-            android:inputType="textPersonName"
+            android:inputType="numberDecimal"
             android:text="" />
     </LinearLayout>
 
@@ -192,7 +193,7 @@
             android:ems="10"
             android:gravity="center"
             android:hint="2.Odev Notu"
-            android:inputType="textPersonName"
+            android:inputType="numberDecimal"
             android:text="" />
 
         <EditText
@@ -203,7 +204,7 @@
             android:ems="10"
             android:gravity="center"
             android:hint="2.Odev Oranı"
-            android:inputType="textPersonName"
+            android:inputType="numberDecimal"
             android:text="" />
     </LinearLayout>
 
@@ -228,7 +229,7 @@
             android:ems="10"
             android:gravity="center"
             android:hint="3.Odev Notu"
-            android:inputType="textPersonName"
+            android:inputType="numberDecimal"
             android:text="" />
 
         <EditText
@@ -239,7 +240,7 @@
             android:ems="10"
             android:gravity="center"
             android:hint="3.Odev Oranı"
-            android:inputType="textPersonName"
+            android:inputType="numberDecimal"
             android:text="" />
     </LinearLayout>
 
@@ -264,7 +265,7 @@
             android:ems="10"
             android:gravity="center"
             android:hint="4.Odev Notu"
-            android:inputType="textPersonName"
+            android:inputType="numberDecimal"
             android:text="" />
 
         <EditText
@@ -275,7 +276,7 @@
             android:ems="10"
             android:gravity="center"
             android:hint="4.Odev Oranı"
-            android:inputType="textPersonName"
+            android:inputType="numberDecimal"
             android:text="" />
     </LinearLayout>
 
@@ -300,7 +301,7 @@
             android:ems="10"
             android:gravity="center"
             android:hint="1.Quiz Notu"
-            android:inputType="textPersonName"
+            android:inputType="numberDecimal"
             android:text="" />
 
         <EditText
@@ -311,7 +312,7 @@
             android:ems="10"
             android:gravity="center"
             android:hint="1.Quiz Oranı"
-            android:inputType="textPersonName"
+            android:inputType="numberDecimal"
             android:text="" />
     </LinearLayout>
 
@@ -336,7 +337,7 @@
             android:ems="10"
             android:gravity="center"
             android:hint="2.Quiz Notu"
-            android:inputType="textPersonName"
+            android:inputType="numberDecimal"
             android:text="" />
 
         <EditText
@@ -347,7 +348,7 @@
             android:ems="10"
             android:gravity="center"
             android:hint="2.Quiz Oranı"
-            android:inputType="textPersonName"
+            android:inputType="numberDecimal"
             android:text="" />
     </LinearLayout>
 
@@ -372,7 +373,7 @@
             android:ems="10"
             android:gravity="center"
             android:hint="3.Quiz Notu"
-            android:inputType="textPersonName"
+            android:inputType="numberDecimal"
             android:text="" />
 
         <EditText
@@ -383,7 +384,7 @@
             android:ems="10"
             android:gravity="center"
             android:hint="3.Quiz Oranı"
-            android:inputType="textPersonName"
+            android:inputType="numberDecimal"
             android:text="" />
     </LinearLayout>
 
@@ -408,7 +409,7 @@
             android:ems="10"
             android:gravity="center"
             android:hint="Geçme Notu"
-            android:inputType="textPersonName"
+            android:inputType="numberDecimal"
             android:text="" />
 
         <EditText
@@ -419,7 +420,7 @@
             android:ems="10"
             android:gravity="center"
             android:hint="Final Oranı"
-            android:inputType="textPersonName"
+            android:inputType="numberDecimal"
             android:text="" />
     </LinearLayout>
 
