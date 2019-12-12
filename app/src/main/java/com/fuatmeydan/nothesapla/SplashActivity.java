@@ -23,10 +23,10 @@ public class SplashActivity extends AppCompatActivity {
         @Override
         public void run() {
             try {
-                Thread.sleep(5000);
+                Thread.sleep(2000);
             } catch (Exception e) {
             }
-            Intent intent = new Intent(SplashActivity.this, UyariActivity.class);
+            Intent intent = new Intent(SplashActivity.this, GirisActivity.class); //Artık uyarı actvity e ihtiyacımız olmadı için direk giriş activity e yönlendiriyoruz.
             startActivity(intent);
             finish(); //Bu activity kapanır
         }
