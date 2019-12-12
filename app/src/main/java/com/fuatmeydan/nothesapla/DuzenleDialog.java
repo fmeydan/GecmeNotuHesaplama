@@ -13,16 +13,16 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDialogFragment;
 
-public class DuzenleDialog extends AppCompatDialogFragment {
+public class DuzenleDialog extends AppCompatDialogFragment { //oluşturduğumuz dialogfragmenti kullanabilmemiz için AppCompatDialogFragment den extend etmemiz gerekiyor.
     @NonNull
-    private EditText editText_ders_adi;
+    private EditText editText_ders_adi; //dialogbox daki text yazılcak alanı tanımladık.
     private duzenleDialogListener listener;
 
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         LayoutInflater inflater = getActivity().getLayoutInflater();
-        View view =inflater.inflate(R.layout.duzenle_layout,null);
+        View view =inflater.inflate(R.layout.duzenle_layout,null); //oluşturduğumuz layout u inflate etmesi için view e atadık.
         builder.setView(view)
                 .setTitle("Düzenle")
                 .setNegativeButton("Vazgeç", new DialogInterface.OnClickListener() {

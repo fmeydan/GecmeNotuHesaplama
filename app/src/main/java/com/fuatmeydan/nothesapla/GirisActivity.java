@@ -1,39 +1,24 @@
 package com.fuatmeydan.nothesapla;
-
 import androidx.appcompat.app.AppCompatActivity;
-
-import android.app.ActionBar;
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.ContextMenu;
-import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
-
 import java.util.ArrayList;
-
 import Helper.DatabaseHelper;
 
-
 public class GirisActivity extends AppCompatActivity implements DuzenleDialog.duzenleDialogListener {
-ListView lv;
-ArrayList<String> ders_liste;
-ArrayAdapter<String> dersadapter;
+ListView lv;  //Dersleri listeli şekilde göstermek için listview tanımladık.
+ArrayList<String> ders_liste;  //ders listesini adapter ile listview a iletmek için arraylist tanımladık.
+ArrayAdapter<String> dersadapter; //ders listesini listview e iletmek için gerekli olan arrayadapter i tanımladık.
 Button btn_ekle;
 String dersadi;
 int derspos;
@@ -46,44 +31,41 @@ int derspos;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_giris);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN); //Tam ekran gelmesi için gereken kod.
 
-        this.getSupportActionBar().hide();
+        this.getSupportActionBar().hide(); //uygulama isminin yazdığı barı kaldırmak için gereken kod.
         lv=findViewById(R.id.listView_dersler);
-
         btn_ekle=findViewById(R.id.btn_ekle);
-        registerForContextMenu(lv);
+        registerForContextMenu(lv);  //oluşturduğumuz menüyü listview a bağladık.
     }
 
 
 
 
 
-    public void onResume(){
+    public void onResume(){ //Uygulama kodlarını on resume içinde tanımladıkki geri gidip gelmelerde listview yenilensin.
         super.onResume();
         final DatabaseHelper dbHelper=new DatabaseHelper(getApplicationContext());
 
-
-
-
-        ders_liste=dbHelper.dersler();
-        if (ders_liste.size()==0){
+        ders_liste=dbHelper.dersler(); //ders listemizi veritabanından aldık.
+        if (ders_liste.size()==0){ //eğer ders sayısı sıfır sa direk ders ekleme ve hesaplama ekranına yönlendirmesi için ders listesinin eleman sayısına baktık.
             Intent intent = new Intent(GirisActivity.this,MainActivity.class);
             startActivity(intent);
 
-        }else{
+        }else{ //eğer ders listesi sıfırdan büyükse demekki veritabanında ders var. ozaman ders seçim ekranına otomatik yönlenecektir.
             dersadapter=new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line,ders_liste);
-            lv.setAdapter(dersadapter);
-            lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            //array adapterimizi androidin içindeki dropdown item ile ders listesine bağladık.
+            lv.setAdapter(dersadapter); //listview e arrayadapterimizi bağladık. böylece adapterin içindeki bilgiler listview e iletilcek.
+            lv.setOnItemClickListener(new AdapterView.OnItemClickListener() { //listview den herhangi bir ders tıklandığında çalışacak komutlar.
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    dersadi=lv.getItemAtPosition(position).toString();
-                    derspos=position;
-                    ArrayList<String> liste = dbHelper.dersDetay(dersadi);
-                    Intent intent = new Intent(GirisActivity.this,MainActivity.class);
-                    intent.putExtra("dersadi",dersadi);
-                    intent.putExtra("Vize1",liste.get(1));
-                    intent.putExtra("Vize2",liste.get(2));
+                    dersadi=lv.getItemAtPosition(position).toString();  //seçilen dersin listedeki pozisyonundam dersin adını aldık.
+                    derspos=position; //dersin listedeki pozisyonunu aldık.
+                    ArrayList<String> liste = dbHelper.dersDetay(dersadi);  //dbhelperdaki dersDetay metoduyla ders bilgilerini listeye atadık.
+                    Intent intent = new Intent(GirisActivity.this,MainActivity.class); //gelen bilgilerle ders hesap ekranını açmak için intent oluşturduk.
+                    intent.putExtra("dersadi",dersadi);  //dersin adına daha önceden sahip olduğumuz için veritabanından gelen değil elimizdeki ders adını intentle diğer sayfaya iletmek üzere ekledik.
+                    intent.putExtra("Vize1",liste.get(1)); //Vize 1 notu gelen listenin 1.indisinde olduğu için 1.indisi intent e ekledik. (dikkat: 0. indisde dersin adı olduğu için 1.indisle başladık. 0.indisde ID yok çünkü dbhelperdan gelen listeyi oluştururken de ID nin olduğu 0.indisi atlamıştık. )
+                    intent.putExtra("Vize2",liste.get(2)); //Aynı şekilde devam ettik.
                     intent.putExtra("Vize3",liste.get(3));
                     intent.putExtra("Quiz1",liste.get(4));
                     intent.putExtra("Quiz2",liste.get(5));
@@ -104,7 +86,7 @@ int derspos;
                     intent.putExtra("Odev4_Oran",liste.get(20));
                     intent.putExtra("Gecme_Not",liste.get(21));
                     intent.putExtra("Final_Oran",liste.get(22));
-                    startActivity(intent);
+                    startActivity(intent); //intentdeki veriler ile hesaplama ve güncelleme işlemini yapacağımız mainactivity sayfasını açıyoruz.
 
 
                 }
@@ -114,7 +96,7 @@ int derspos;
 
 
         }
-        btn_ekle.setOnClickListener(new View.OnClickListener() {
+        btn_ekle.setOnClickListener(new View.OnClickListener() { //olur ki ders eklemeden geri geliriz veya listedeki dersleri sileriz diye main activity e yönlendirmesi için eklediğimiz buton.
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(GirisActivity.this,MainActivity.class);
@@ -138,22 +120,17 @@ int derspos;
     public boolean onContextItemSelected(MenuItem item) {
        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
 
-       derspos=info.position;
-       dersadi=lv.getItemAtPosition(derspos).toString();
-        final DatabaseHelper dbHelper=new DatabaseHelper(getApplicationContext());
+       derspos=info.position; //uzun basılan dersin listedeki yerini almak için info.position kullandık. (info onCOntextItemSelected metodunun içiinden geliyor.)
+       dersadi=lv.getItemAtPosition(derspos).toString(); //Dersin adını alabilmek için listviev in getItemAtPosition metoduna dersin position ını göndererek aldık.
+        final DatabaseHelper dbHelper=new DatabaseHelper(getApplicationContext()); //database işlemleri için databasehelperdan instance aldık.
 
 
-        switch(item.getItemId()) {
+        switch(item.getItemId()) { //uzun basılınca açılan menüdeki elemanların işlemlerini tanımlamak için switch case yapısı kullandık. Menü için
 
 
             case R.id.Duzenle:
-
                 openDialog(); //duzenleye basılınca oluşturduğumuz dialog u açacak fonksiyonu çağırdık.
-
-
-
-
-
+                                // Açılır menüdeki itemleri oluşturmak için res içinde menu_list.xml oluşturduk. İçinde menü elemanları oluşturuldu.
                 return true;
             case R.id.Sil:
                 if (dbHelper.dersSil(dersadi)){ //dbHelperdaki ders sil methodu başarılı olursa çalışacak kodlar.
@@ -171,7 +148,7 @@ int derspos;
     }
 
     private void openDialog() { //Uzun basılı tutulunca açılan menuden duzenleyi seçince açılcak olan fragment dialog penceresini açaçak method.
-        DuzenleDialog duzenleDialog = new DuzenleDialog();
+        DuzenleDialog duzenleDialog = new DuzenleDialog(); //DuzenleDiyalog interface inden instance aldık.
         duzenleDialog.show(getSupportFragmentManager(),"Duzenle Dialog");
 
     }

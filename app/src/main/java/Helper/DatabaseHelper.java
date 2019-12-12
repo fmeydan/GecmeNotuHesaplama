@@ -5,16 +5,15 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-
 import java.util.ArrayList;
 
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
-    // Database Version
+    // Database Versiyonumuz.
     private static final int DATABASE_VERSION = 1;
 
-    // Database Name
+
     private static final String DATABASE_NAME = "nothesap.db";//database adı
 
     private static final String TABLE_NAME = "dersler";
@@ -51,7 +50,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
     @Override
-    public void onCreate(SQLiteDatabase db) {  // DatabaseHelper classından instance alınınca kendi çalışıyor bu kod.
+    public void onCreate(SQLiteDatabase db) {  // DatabaseHelper classından instance alınınca kendi çalışıyor bu kod. static constant olarak oluşturduğumuz değerler ile yoksa veritabanı oluşturuyor.
         String CREATE_TABLE = "CREATE TABLE " + TABLE_NAME + "("
                 + ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + DERS_ADI + " TEXT,"
@@ -80,12 +79,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(CREATE_TABLE);
     }
 
-    public boolean dersSil(String ad){
+    public boolean dersSil(String ad){ //Veritabanından ders silmek için oluşturduğumuz fonksiyon.
 
-        SQLiteDatabase db = this.getWritableDatabase();
+        SQLiteDatabase db = this.getWritableDatabase(); //veritabanını yazılabilir şekilde açtık.
         try{
 
-            String sql=String.format("delete from dersler where ders_adi = '%s'",ad);
+            String sql=String.format("delete from dersler where ders_adi = '%s'",ad); //ders adını göndereceğimiz şekilde sql stringimizi oluşturduk.
 
             db.execSQL(sql);
             db.close();
@@ -98,15 +97,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
+
+    //Ders ekle metodu ilk önce ders database de aynı isimde ders var mı yok mu onu kontrol eder
+    //Ders database de mevcutsa girilen değerler ile databesi günceller.
+    //Mevcut değilse yeni ders olarak dersi ekler.
     public String dersEkle(String ders_adi, String vize1,String vize2,String vize3,String quiz1,String quiz2,String quiz3,String odev1,String odev2,String odev3,String odev4,String vize1_oran,String vize2_oran,String vize3_oran,String quiz1_oran,String quiz2_oran,String quiz3_oran,String odev1_oran,String odev2_oran,String odev3_oran,String odev4_oran,String final_oran,String gecme_not) {
 
-        SQLiteDatabase dbr = this.getReadableDatabase();
-        String selectQuery = String.format("select * from dersler where ders_adi='%s'",ders_adi);
-        Cursor cursor = dbr.rawQuery(selectQuery, null);
-        if (!cursor.moveToNext()){
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        try {
+        SQLiteDatabase dbr = this.getReadableDatabase(); //Database de ders varmı yokmu sorgulayabilmek için instance aldık(getReadableDatabase)
+        String selectQuery = String.format("select * from dersler where ders_adi='%s'",ders_adi); //Ders adını selectquery isminde bir değişkene atadık (String formatlama kullandık %s olan yere virgülden sonra ders_adi olan değişken gelecek.)
+        Cursor cursor = dbr.rawQuery(selectQuery, null); //Cursor tanımlayıp select sorgusunu gönderdik.
+        if (!cursor.moveToNext()){    //Eğer cursor sıradakine ilerlemesse bu veritabanında bu isimde bir ders olmadığını gösterir. Yani Ekleme yapabiliriz.
+        SQLiteDatabase db = this.getWritableDatabase(); //Veritabanını yazılabilir bir şekilde aldık.
+        ContentValues values = new ContentValues(); //Content values oluşturduk böylece sorguya hangi değeri neyle kaydedeceğini gönderebileceğiz.
+        try {  //hata olasılığını düşürmek için try catch bloğu ile verileri values in içine gönderiyoruz.
+            //Daha önce static değişmez (Static Constant) olarak veritabanı kolonlarını tanımladık. böylece kolon isimleri konusunda hata ihtimalini ortadan kaldırdık.
             values.put(DERS_ADI, ders_adi);
             values.put(VIZE1, vize1);
             values.put(VIZE2, vize2);
@@ -131,79 +135,42 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             values.put(FINAL_ORAN,final_oran);
             values.put(GECME_NOT,gecme_not);
 
-            db.insert(TABLE_NAME, null, values);
+            db.insert(TABLE_NAME, null, values);  //database e insert komutu ile verilerimizi ekledik.
             db.close();
-            return "Ders Ekleme Başarılı";
-        } catch (Exception e){
+            return "Ders Ekleme Başarılı"; //Toast mesaj ile verilerin eklendiğini ekrana yazdırdık.
+        } catch (Exception e){ //Veri eklenirken bir hata oluşursa çalışacak blok.
 
-            return "Ders Eklenirken Bir Hata Oluştu";
+            return "Ders Eklenirken Bir Hata Oluştu"; //Bir hata meydana gelirse Toast mesajı ile ekrana yazdıracağımız hata mesajı.
         }
-        }else {
-            SQLiteDatabase db = this.getWritableDatabase();
-            ContentValues values = new ContentValues();
-            values.put(VIZE1, vize1);
-            values.put(VIZE2, vize2);
-            values.put(VIZE3, vize3);
-            values.put(QUIZ1, quiz1);
-            values.put(QUIZ2, quiz2);
-            values.put(QUIZ3, quiz3);
-            values.put(ODEV1, odev1);
-            values.put(ODEV2, odev2);
-            values.put(ODEV3, odev3);
-            values.put(ODEV4, odev4);
-            values.put(VIZE1_ORAN, vize1_oran);
-            values.put(VIZE2_ORAN, vize2_oran);
-            values.put(VIZE3_ORAN, vize3_oran);
-            values.put(QUIZ1_ORAN, quiz1_oran);
-            values.put(QUIZ2_ORAN, quiz2_oran);
-            values.put(QUIZ3_ORAN, vize3_oran);
-            values.put(ODEV1_ORAN, odev1_oran);
-            values.put(ODEV2, odev2_oran);
-            values.put(ODEV3_ORAN, odev3_oran);
-            values.put(ODEV4_ORAN, odev4_oran);
-            values.put(FINAL_ORAN, final_oran);
-            values.put(GECME_NOT, gecme_not);
-            try {
-                db.update(TABLE_NAME, values, DERS_ADI + " = ?",
-                        new String[]{String.valueOf(ders_adi)});
-                db.close();
+        }else {  //Cursor eğer bir sonraki satıra geçerse bu veritabanında o isimde bir ders olduğunu gösterir. Ozaman yukarıdaki if bloğu çalışmayıp buraya gelir ve else bloğumuz çalışır.
+
+
+            try { //Aşağıda tanımladığımız dersGuncelle fonksiyonunu çağırdık ve değerleri gönderdik.
+                //try catch bloğu içinde yaptıkki herhangi bir hatada uygulamamız çökmesin.
+              dersDuzenle(ders_adi,vize1,vize2,vize3,quiz1,quiz2,quiz3,odev1,odev2,odev3,odev4,vize1_oran,vize2_oran,vize3_oran,quiz1_oran,quiz2_oran,quiz3_oran,odev1_oran,odev2_oran,odev3_oran,odev4_oran,final_oran,gecme_not);
                 return "Ders Güncellendi";
+
 
             } catch (Exception e) {
 
                 return "Ders Güncellemede Hata Oluştu";
             }
         }
-
-
-//
-//
-//                String sql = String.format("update dersler set vize1=%s where ders_adi='%s'", vize1, ders_adi);
-//                db.execSQL(sql);
-//                db.close();
-//                return sql;
-//            }catch (Exception e){
-//                return String.format("update dersler set vize1='%s' where ders_adi='%s'", vize1, ders_adi);
-//            }
-
         }
 
+    public ArrayList<String> dersDetay(String dersad){  //Derslerin notlarını alabilmek için dersin adını değer olarak alan bu metodu oluşturduk.
+        SQLiteDatabase db = this.getReadableDatabase(); //veritabanını okuma modunda alıyoruz.
+
+        ArrayList<String> ders = new ArrayList<>(); //Gelen notları tutmak için ders adında ArrayList tanımladık.
 
 
-    public ArrayList<String> dersDetay(String dersad){
-        SQLiteDatabase db = this.getReadableDatabase();
-
-        ArrayList<String> ders = new ArrayList<>();
+        String selectQuery=("SELECT * FROM " + TABLE_NAME+ " WHERE ders_adi=?"); //metoda gelen dersin adını yerleştirebileceğimiz ve o derse ait bilgilerin gelmesi için sorgu oluşturuyoruz.
 
 
-        String selectQuery=("SELECT * FROM " + TABLE_NAME+ " WHERE ders_adi=?");
-
-
-        Cursor cursor = db.rawQuery(selectQuery,new String[] { String.valueOf(dersad) });
-        // Move to first row
-        cursor.moveToFirst();
-        if(cursor.getCount() > 0){
-            ders.add(cursor.getString(1));
+        Cursor cursor = db.rawQuery(selectQuery,new String[] { String.valueOf(dersad) }); //Metoda gelen ders adini yerleştirip sorguyu çalıpştıracak ver verileri tek tek okuyacak bir cursor oluşturuyoruz.
+        cursor.moveToFirst(); //İlk Sıraya gitmesini sağlıyoruz böylece ders atlama ihtimalini ortadan kaldırıyoruz.
+        if(cursor.getCount() > 0){ //Cursorumuz eğer ilerleyebiliyorsa bu dersin olduğu anlamına gelir ve verileri önceden oluşturduğumuz ders adlı listeye eklemeye başlar.
+            ders.add(cursor.getString(1)); //dikkat edilmesi gereken konu 0.index den başlamadık. çünkü 0.index bize dersin id sini veriyor. Aslında 1.indexi de almayabilirdik dersin adı zaten elimizde mevcut.
             ders.add(cursor.getString(2));
             ders.add(cursor.getString(3));
             ders.add( cursor.getString(4));
@@ -234,35 +201,31 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return ders;
     }
 
-    public  ArrayList<String> dersler(){
+    public  ArrayList<String> dersler(){ //Derslerin isimlerini almamızı sağlayan metot.
 
 
 
-        SQLiteDatabase db = this.getReadableDatabase();
-        String selectQuery = "SELECT * FROM " + TABLE_NAME;
-        Cursor cursor = db.rawQuery(selectQuery, null);
-        ArrayList<String> derslist = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase(); //veritabanını okunabilir şekilde aldık.
+        String selectQuery = "SELECT * FROM " + TABLE_NAME; //veritabanındaki tüm bilgileri almak için sorgu stringimizi yazdık.
+        Cursor cursor = db.rawQuery(selectQuery, null); //Kolonları tek tek gezmesi için cursor oluşturup sorgu stringimizle çalıştırdık.
+        ArrayList<String> derslist = new ArrayList<>(); //Gelen ders adlarını tutmak için bir array list tanımladık.
 
 
         while(cursor.moveToNext()){
-            derslist.add(cursor.getString(cursor.getColumnIndex("ders_adi")));
+            derslist.add(cursor.getString(cursor.getColumnIndex(DERS_ADI))); //cursorun ilerlediki her satırdaki ders_adi isimli kolondaki veriyi alıp oluşturduğumuz listeye attık.
 
         }
         db.close();
 
-        return derslist;
+        return derslist; //ders listesini return ettik.
     }
-
-
-
-
 
     public void dersDuzenle(String ders_adi , String vize1,String vize2,String vize3,String quiz1,String quiz2,String quiz3,String odev1,String odev2,String odev3,String odev4,String vize1_oran,String vize2_oran,String vize3_oran,String quiz1_oran,String quiz2_oran,String quiz3_oran,String odev1_oran,String odev2_oran,String odev3_oran,String odev4_oran,String final_oran,String gecme_not)
     {
-        SQLiteDatabase db = this.getWritableDatabase();
+        SQLiteDatabase db = this.getWritableDatabase(); //Veritabanını yine yazılabilir bir şekilde alıyoruz.
 
-        ContentValues values = new ContentValues();
-        values.put(DERS_ADI, ders_adi);
+        // Burada gelen verileri yine aynı şekilde values e atıp bu defa update komutuyla güncelleme yapacağız.
+        ContentValues values = new ContentValues();  //Values olarak değerlerimizi tanımlıyoruz.
         values.put(VIZE1, vize1);
         values.put(VIZE2, vize2);
         values.put(VIZE3, vize3);
@@ -286,9 +249,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(FINAL_ORAN,final_oran);
         values.put(GECME_NOT,gecme_not);
 
-
+        //Bu defa insert değil update komutumuzu çalıştırıyoruz.
         db.update(TABLE_NAME, values, DERS_ADI + " = ?",
                 new String[] { String.valueOf(ders_adi) });
+        db.close();
+
     }
 
     public void sadeceDersAdiDuzenle(String yeniDers,String eskiDers){
@@ -297,10 +262,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(DERS_ADI,yeniDers);
         db.update(TABLE_NAME, values, DERS_ADI + " = ?",
                 new String[] { String.valueOf(eskiDers) });
+        db.close();
     }
 
-    public int getRowCount() {
+    public int satirSayisi() {
 
+        //Şu an için bu fonksiyona ihtiyacımız yok. fakat ilerde kaç ders oluğunu bulmak için lazım olabilir.
         String countQuery = "SELECT  * FROM " + TABLE_NAME;
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(countQuery, null);
@@ -312,7 +279,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     public void databaseTemizle(){
-
+        //Databasei temizlemek için gerekli metot henüz kullanmamıza gerek yok.
         SQLiteDatabase db = this.getWritableDatabase();
 
         db.delete(TABLE_NAME, null, null);

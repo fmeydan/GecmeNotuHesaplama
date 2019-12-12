@@ -34,12 +34,6 @@ public class MainActivity extends AppCompatActivity  {
     EditText vize1,vize2,vize3,odev1,odev2,odev3,odev4,quiz1,quiz2,quiz3,vize1_oran,vize2_oran,vize3_oran,odev1_oran,odev2_oran,odev3_oran,odev4_oran,quiz1_oran,quiz2_oran,quiz3_oran,gecme_not,final_oran,dersAdi;
     TextView gereken_not;
     Button btn_hesapla,btn_kaydet;
-    SQLiteDatabase db;
-
-
-
-   // ArrayList<String> derslistesi=new ArrayList<>();
-    ArrayAdapter<String> dersadapter;
     SharedPreferences sp;
     SharedPreferences.Editor spe;
     ArrayList<String>ders_liste;
@@ -48,11 +42,8 @@ public class MainActivity extends AppCompatActivity  {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
-
-
-        this.getSupportActionBar().hide();
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN); //full ekran olması için gerekli kod
+        this.getSupportActionBar().hide(); //uygulamanın (activity nin) adını gizlemek için kod.
         vize1=findViewById(R.id.et_vize1);
         vize2=findViewById(R.id.et_vize2);
         vize3=findViewById(R.id.et_vize3);
@@ -84,9 +75,9 @@ public class MainActivity extends AppCompatActivity  {
         DatabaseHelper dbHelper=new DatabaseHelper(getApplicationContext());
         ders_liste=dbHelper.dersler();
 
-        try {
-            Bundle veriler = getIntent().getExtras();
-            dersAdi.setText(veriler.getString("dersadi"));
+        try {  //intentle gelen verileri boş olabilir diye try bloğu oluşturduk.
+            Bundle veriler = getIntent().getExtras();  //intentle gelen verileri almak için BUndle oluşturduk.
+            dersAdi.setText(veriler.getString("dersadi")); //veriler adında oluşturduğumuz Bundle daki verileri yerlerine yerleştirdik.
             vize1.setText(veriler.getString("Vize1"));
             vize2.setText(veriler.getString("Vize2"));
             vize3.setText(veriler.getString("Vize3"));
@@ -109,7 +100,7 @@ public class MainActivity extends AppCompatActivity  {
             odev4_oran.setText(veriler.getString("Odev4_Oran"));
             gecme_not.setText((veriler.getString("Gecme_Not")));
             final_oran.setText(veriler.getString("Final_Oran"));
-        }catch (Exception e){
+        }catch (Exception e){ //veriler boş gelirse uygulama birşey yapmadan ve çökmeden devam edecek.
 
         }
 
@@ -122,10 +113,10 @@ public class MainActivity extends AppCompatActivity  {
 
 
 
-        btn_hesapla.setOnClickListener(new View.OnClickListener() {
+        btn_hesapla.setOnClickListener(new View.OnClickListener() {  //Hesapla butonuna basılınca çalışacak fonksiyon.
             @Override
             public void onClick(View v) {
-                try {
+                try { //önce alanlardaki tüm bilgileri double a çevirdik. sayı yerine harf girilebilmesi ihtimaline karşı try catch bloğu içinde çalışıyoruz.
                     double gecmeNot=Double.parseDouble(gecme_not.getText().toString());
                     double vize1Not=Double.parseDouble(vize1.getText().toString());
                     double vize1Oran=Double.parseDouble(vize1_oran.getText().toString());
@@ -151,12 +142,12 @@ public class MainActivity extends AppCompatActivity  {
 
 
 
-                    if ((vize1Oran+vize2Oran+vize3Oran+odev1Oran+odev2Oran+odev3Oran+odev4Oran+quiz1Oran+quiz2Oran+quiz3Oran+finalOran)!=100){
+                    if ((vize1Oran+vize2Oran+vize3Oran+odev1Oran+odev2Oran+odev3Oran+odev4Oran+quiz1Oran+quiz2Oran+quiz3Oran+finalOran)!=100){ //oranların toplamı 100 ü geçmemesi için koşul kontrolü yapıyoruz.
                         Toast.makeText(getApplicationContext(),"Oranların Toplamı 100 olmalı",Toast.LENGTH_LONG).show();
                     }else{
                         double gerkenNot=(gecmeNot-(oranHesap(vize1Not,vize1Oran))-(oranHesap(vize2Not,vize2Oran))-(oranHesap(vize3Not,vize3Oran))-(oranHesap(odev1Not,odev1Oran))-(oranHesap(odev2Not,odev2Oran))-(oranHesap(odev3Not,odev3Oran))-(oranHesap(odev4Not,odev4Oran))-(oranHesap(quiz1Not,quiz1Oran))-(oranHesap(quiz2Not,quiz2Oran))-(oranHesap(quiz3Not,quiz3Oran)))/(finalOran/100);
-                        String gerekenString=String.valueOf(gerkenNot);
-                        gereken_not.setText(gerekenString);
+                        String gerekenString=String.valueOf(gerkenNot); //gelen verilerle geçmek için gerekli olan notu hesaplayan formül.
+                        gereken_not.setText(gerekenString); //çıkan sonucu gerekli alana yazdırıyoruz.
                     }
 
 
@@ -175,7 +166,7 @@ public class MainActivity extends AppCompatActivity  {
 
         btn_kaydet.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v) { //verileri veritabanına kaydetmek için gereken fonksiyon.
                 DatabaseHelper dbHelper =new DatabaseHelper(getApplicationContext());
 
                 String kaydet_dersAdi=dersAdi.getText().toString();
@@ -202,7 +193,10 @@ public class MainActivity extends AppCompatActivity  {
                 String kaydet_final_oran = (final_oran.getText().toString());
                 String kaydet_gecme_not = (gecme_not.getText().toString());
 
+                //DatabaseHelper daki dersEkle metoduna verileri yolluyoruz. String bir değişkene eşitliyoruz kli gelen mesajı ekrana gösterelim. (eşitlemeden direk Toastın içine de yazabilirdik ama açık olsun)
                 String sonuc=dbHelper.dersEkle(kaydet_dersAdi,kaydet_vize1,kaydet_vize2,kaydet_vize3,kaydet_quiz1,kaydet_quiz2,kaydet_quiz3,kaydet_odev1,kaydet_odev2,kaydet_odev3,kaydet_odev4,kaydet_vize1Oran,kaydet_vize2Oran,kaydet_vize3Oran,kaydet_quiz1Oran,kaydet_quiz2Oran,kaydet_quiz3Oran,kaydet_odev1Oran,kaydet_odev2Oran,kaydet_odev3Oran,kaydet_odev4Oran,kaydet_final_oran,kaydet_gecme_not);
+
+                //Toast ile gelen mesajı ekrana yazdırıyoruz.
                 Toast.makeText(getApplicationContext(),sonuc,Toast.LENGTH_LONG).show();
 
             }
@@ -210,13 +204,13 @@ public class MainActivity extends AppCompatActivity  {
 
 
     }
-    private double oranHesap(double not,double oran){
+    private double oranHesap(double not,double oran){ //formülümüzde kalabalık oluşturmaması için oran bu fonksiyonu oluşturduk. girilen oranı yüzdelik kısma çevirmesi için.
         return not*(oran/100);
     }
 
 
     @Override
-    public void onBackPressed() {
+    public void onBackPressed() {  //geri tuşuna basınca ders listesini oluşturması için geri tuş fonksiyonu.
         Intent intent =new Intent(MainActivity.this,GirisActivity.class);
         startActivity(intent);
         finish();
