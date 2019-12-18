@@ -43,3 +43,5 @@ Veritabanına boş kayıt eklenmesi engellendi.
 Bilgilendirme Activity kaldırıldı.
 
 Icon eklendi.
+
+Gerekli olmayan notlara 0 yazılma zorunluluğu kaldırıldı.
