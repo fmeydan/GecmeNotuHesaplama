@@ -189,7 +189,8 @@ public class MainActivity extends AppCompatActivity  {
                         //gelen verilerle geçmek için gerekli olan notu hesaplayan formül.
                         double gerkenNot=(gecmeNot-(oranHesap(vize1Not,vize1Oran))-(oranHesap(vize2Not,vize2Oran))-(oranHesap(vize3Not,vize3Oran))-(oranHesap(odev1Not,odev1Oran))-(oranHesap(odev2Not,odev2Oran))-(oranHesap(odev3Not,odev3Oran))-(oranHesap(odev4Not,odev4Oran))-(oranHesap(quiz1Not,quiz1Oran))-(oranHesap(quiz2Not,quiz2Oran))-(oranHesap(quiz3Not,quiz3Oran)))/(finalOran/100);
                         String gerekenString=String.valueOf(gerkenNot);
-                        if (gerkenNot<100){Toast.makeText(getApplicationContext(),"Geçme notu '0' ın altında.",Toast.LENGTH_SHORT).show();} //çıkan sonucun 0 ın altında kalması ihtimaline karşı kontrol yapıyoruz.
+                        //Toast.makeText(getApplicationContext(),gerekenString,Toast.LENGTH_LONG).show();
+                        if (gerkenNot<0){Toast.makeText(getApplicationContext(),"Geçme notu '0' ın altında.",Toast.LENGTH_SHORT).show();} //çıkan sonucun 0 ın altında kalması ihtimaline karşı kontrol yapıyoruz.
                         else{gereken_not.setText(gerekenString);} //çıkan sonucu gerekli alana yazdırıyoruz.
                     }
 

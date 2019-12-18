@@ -6,8 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:weightSum="14"
     android:background="@drawable/main_background"
+    android:weightSum="14"
     tools:context=".MainActivity">
 
 
